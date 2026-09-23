@@ -28,6 +28,7 @@ Phases 1, 2, and 4 are largely stack-independent — they transfer to a Neon/Pri
 7. **Pick and connect the database.** (Supabase here; this is the swappable slot.) Then translate the model into a **versioned migration** (`supabase/migrations/<timestamp>_name.sql`), apply it, and **generate types** into `types/supabase.ts` (import as `@/types/supabase`).
    - Apply via SQL Editor → Run for a hosted project (no CLI/Docker needed). Verify in Table Editor (empty RLS-protected tables = correct).
    - `.env.local` holds literal values (never committed): URL as bare origin (no trailing slash / no `/rest/v1`), publishable key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`, secret key → `SUPABASE_SERVICE_ROLE_KEY`. Restart the dev server after editing env.
+   - Env handling (the `NEXT_PUBLIC_` boundary, `.env.example` vs `.env.local`, and getting keys onto the host so deploys aren't blank) is its own topic. See [Env & Deployment](./env-and-deployment.md).
 
 ## Phase 4 — Prove it works (de-risk before feature sprawl)
 

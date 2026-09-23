@@ -12,6 +12,7 @@ My personal, evolving knowledge base for building software well — written as I
 | [Domain & Glossary](./playbooks/domain-and-glossary.md) | What "domain" means, ubiquitous language, and how to structure a domain/glossary section (Domain-Driven Design basics). |
 | [Requirements](./playbooks/requirements.md) | Discovery vs. requirements, user stories + acceptance criteria, scope tiers, and non-functional requirements. |
 | [Testing: MSW + TDD](./playbooks/testing-msw-tdd.md) | Mocking the network boundary with MSW, the test-environment rule, and the two testing recipes. |
+| [Env & Deployment](./playbooks/env-and-deployment.md) | The `NEXT_PUBLIC_` security boundary, `.env.example` vs `.env.local`, why green CI ≠ deployed, and least privilege. |
 
 ## How I use this
 
