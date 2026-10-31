@@ -13,6 +13,9 @@ My personal, evolving knowledge base for building software well — written as I
 | [Requirements](./playbooks/requirements.md) | Discovery vs. requirements, user stories + acceptance criteria, scope tiers, and non-functional requirements. |
 | [Testing: MSW + TDD](./playbooks/testing-msw-tdd.md) | Mocking the network boundary with MSW, the test-environment rule, and the two testing recipes. |
 | [Env & Deployment](./playbooks/env-and-deployment.md) | The `NEXT_PUBLIC_` security boundary, `.env.example` vs `.env.local`, why green CI ≠ deployed, and least privilege. |
+| [Data-Layer Security](./playbooks/data-layer-security.md) | Enforce at the data layer, deny by default, views as public contracts, why green tests don't prove security, forward-only migrations. |
+| [Git Workflow](./playbooks/git-workflow.md) | The branch → PR → merge → cleanup loop, commit prefixes, merge styles, and what actually triggers CI. |
+| [Working with AI Agents](./playbooks/working-with-agents.md) | Docs vs. environment permissions, where agent instructions live, new chats at task boundaries, snapshot vs. living files. |
 
 ## How I use this
 

@@ -29,6 +29,7 @@ Phases 1, 2, and 4 are largely stack-independent — they transfer to a Neon/Pri
    - Apply via SQL Editor → Run for a hosted project (no CLI/Docker needed). Verify in Table Editor (empty RLS-protected tables = correct).
    - `.env.local` holds literal values (never committed): URL as bare origin (no trailing slash / no `/rest/v1`), publishable key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`, secret key → `SUPABASE_SERVICE_ROLE_KEY`. Restart the dev server after editing env.
    - Env handling (the `NEXT_PUBLIC_` boundary, `.env.example` vs `.env.local`, and getting keys onto the host so deploys aren't blank) is its own topic. See [Env & Deployment](./env-and-deployment.md).
+   - Every later schema change is a **new** migration (never edit an applied one), followed by regenerated types, committed together. Lock down what the public can read at the database level (grants, RLS, views). See [Data-Layer Security](./data-layer-security.md).
 
 ## Phase 4 — Prove it works (de-risk before feature sprawl)
 

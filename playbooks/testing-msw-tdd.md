@@ -70,6 +70,10 @@ Per-file override is the senior move: "test environment matches runtime" applies
 - **Recipe B = testing UI** (usually a Client Component) → jsdom.
 - Note: a *Server Action* is not a *Server Component*. Recipe A tests the action function directly, no rendering.
 
+## What mocked tests can't prove
+
+MSW tests never reach the real database, so they can't verify permissions, grants, or RLS. They prove your code asks for the right thing, not that the database allows or blocks it. Check security against the real database. See [Data-Layer Security](./data-layer-security.md).
+
 ## Commit rhythm for TDD
 
 Commit in two steps: `test:` (the failing test) then `feat:` (the implementation that makes it pass). The history reads as red → green.
