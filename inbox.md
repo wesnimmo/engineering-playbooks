@@ -31,6 +31,14 @@ Raw notes waiting to be folded into the playbooks. Jot here after each lesson; f
 - [Lesson 7] (principle) Some security settings live in the dashboard, not the repo. Anything not in a migration must be written down, or it's invisible to the next person.
 - [Lesson 7] (mechanism) Supabase anonymous sign-ins give visitors the `authenticated` role, not `anon`. Leave them off unless intended, or they pass every `to authenticated` grant.
 - [Lesson 7] (principle) Handovers are append-only snapshots; living docs (NOTES, learning records) get updated. Start a new chat at a lesson boundary, after the records are committed.
+[Lesson 8] (principle) Give the agent autonomy where actions are undoable. Put a human checkpoint where work becomes shared (push, PR, merge).
+[Lesson 8] (principle) Enforce that checkpoint in the platform, not in a doc. Branch protection on main is the real lock; the AGENTS.md rule is good manners.
+[Lesson 8] (principle) A skill runs only when invoked, so it automates a procedure without giving the agent standing permission.
+[Lesson 8] (principle) "App vs. owner" is about which database role a request runs as, not where the code runs. Server Actions on the anon key are still "the app."
+[Lesson 8] (mechanism) To create a profile at signup, put an `after insert` trigger on `auth.users` that calls a `security definer` function. A policy on the profile table never sees signup happen.
+[Lesson 8] (mechanism) In a `security definer` function, set `search_path = ''` and fully qualify every table (`public.musicians`) so it can't be tricked into touching the wrong object.
+[Lesson 8] (mechanism) A trigger runs inside the signup transaction: if the function fails, signup fails. Test trigger changes by creating a user.
+[Lesson 8] (mechanism) A function that `returns trigger` isn't exposed over the Data API, so don't revoke EXECUTE on it the way you would on an RPC function.
  
 ## Folded
 
