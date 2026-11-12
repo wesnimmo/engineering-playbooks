@@ -1,6 +1,6 @@
 # Inbox
 
-Raw notes waiting to be folded into the playbooks. Jot here after each lesson; fold every 2–3 lessons, then clear what's been folded.
+Raw notes waiting to be folded into the playbooks. Jot here after each lesson; fold every 2–3 lessons **or when the course changes subject**, whichever comes first. Then clear what's been folded.
 
 **Filter before folding:**
 
@@ -14,32 +14,12 @@ Raw notes waiting to be folded into the playbooks. Jot here after each lesson; f
 
 ## Waiting to fold
 
-- [Lesson 7 prep] (principle) A linter or security advisor is a smoke alarm, not a judge. A flagged warning can be the correct design. When I keep one on purpose, I write an ADR so the next person (or agent) doesn't "fix" it.
-- [Lesson 7 prep] (principle) Verify security by impersonating the user, not by reading the code. Run the query as the public role and confirm the forbidden read fails and the allowed read succeeds.
-- [Lesson 7 prep] (mechanism) In the Supabase SQL Editor, switch the role dropdown from `postgres` to `anon` to test what the public can actually read.
-- [Lesson 7 prep] (mechanism) A SECURITY DEFINER view runs with its owner's rights and ignores RLS on the underlying table. Any "hide these rows" rule has to be a `WHERE` clause in the view itself.
-- [Lesson 7 prep] (mechanism) Postgres functions are executable by everyone by default. Revoke `EXECUTE` from `anon` and `authenticated` on any function the public shouldn't call over RPC.
-- [Lesson 7 prep] (principle) Every change gets a branch, even a small chore. Committing straight to `main` skips the PR, and the PR is where CI runs.
-- [Lesson 7 prep] some security settings live in the dashboard, not in code, so write them down or they'll be lost.
-- [Lesson 7] (principle) A login account is not a profile. Auth owns identity (auth.users); my table owns the profile; one foreign key (auth_user_id) links them.
-- [Lesson 7] (mechanism) GRANT and RLS are two separate gates. GRANT decides whether a role may touch the table at all; an RLS policy decides which rows it sees. No grant → denied before policies run. Grant but no matching policy → zero rows.
-- [Lesson 7] (mechanism) In a policy, `using` filters which existing rows you can act on; `with check` validates what the row looks like after an insert/update (stops reassigning auth_user_id to someone else).
-- [Lesson 7] (mechanism) Write `(select auth.uid())`, not bare `auth.uid()`, in policies. Postgres evaluates it once per query instead of once per row.
-- [Lesson 7] (principle) Test the negative cases, not just the happy path. Owner sees their row, a second user sees nothing, anon is denied. One passing case proves little.
-- [Lesson 7] (principle) Regenerate types when the schema's shape changes, not when permissions change. Grants and policies don't touch types.
-- [Lesson 7] (principle) Test data is not schema. Keep seed rows and test users out of migrations, and never commit real auth UUIDs or passwords.
-- [Lesson 7] (principle) Some security settings live in the dashboard, not the repo. Anything not in a migration must be written down, or it's invisible to the next person.
-- [Lesson 7] (mechanism) Supabase anonymous sign-ins give visitors the `authenticated` role, not `anon`. Leave them off unless intended, or they pass every `to authenticated` grant.
-- [Lesson 7] (principle) Handovers are append-only snapshots; living docs (NOTES, learning records) get updated. Start a new chat at a lesson boundary, after the records are committed.
-[Lesson 8] (principle) Give the agent autonomy where actions are undoable. Put a human checkpoint where work becomes shared (push, PR, merge).
-[Lesson 8] (principle) Enforce that checkpoint in the platform, not in a doc. Branch protection on main is the real lock; the AGENTS.md rule is good manners.
-[Lesson 8] (principle) A skill runs only when invoked, so it automates a procedure without giving the agent standing permission.
-[Lesson 8] (principle) "App vs. owner" is about which database role a request runs as, not where the code runs. Server Actions on the anon key are still "the app."
-[Lesson 8] (mechanism) To create a profile at signup, put an `after insert` trigger on `auth.users` that calls a `security definer` function. A policy on the profile table never sees signup happen.
-[Lesson 8] (mechanism) In a `security definer` function, set `search_path = ''` and fully qualify every table (`public.musicians`) so it can't be tricked into touching the wrong object.
-[Lesson 8] (mechanism) A trigger runs inside the signup transaction: if the function fails, signup fails. Test trigger changes by creating a user.
-[Lesson 8] (mechanism) A function that `returns trigger` isn't exposed over the Data API, so don't revoke EXECUTE on it the way you would on an RPC function.
- 
+<!-- Lesson 9 notes go here. -->
+
 ## Folded
 
-<!-- Move entries here (or delete them) after they're in a playbook. Note which playbook. -->
+- **Lessons 7–8** (folded after Lesson 8):
+  - `data-layer-security.md`: app vs. owner, login vs. profile, impersonation and negative-case testing, advisor as smoke alarm, dashboard settings, test data vs. schema, GRANT vs. RLS gates, `using` / `with check`, `(select auth.uid())`, definer views and functions (revoke from `public, anon, authenticated`), signup trigger, `search_path`, anonymous sign-ins, types only on shape changes.
+  - `git-workflow.md`: branch for every change, merge-method policy, never squash `test:`/`feat:` pairs, branch protection and required checks, stuck-CI status page.
+  - `working-with-agents.md`: autonomy line, platform enforcement, skills without standing permission, `prepare-pr` pattern, handovers vs. living files.
+  - `project-startup.md`: branch protection at scaffold time; login vs. profile with a signup trigger.

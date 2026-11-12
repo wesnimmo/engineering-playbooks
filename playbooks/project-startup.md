@@ -25,11 +25,13 @@ Phases 1, 2, and 4 are largely stack-independent — they transfer to a Neon/Pri
 ## Phase 3 — Set up the machine (tooling; the swappable phase)
 
 6. **Scaffold + agent config.** Create the Next.js project, install dependencies, write `AGENT.md` and rules files. `git init`, first commit, connect remote (`git push -u origin main` on the first push).
+   - Right after the first push, turn on branch protection for `main` (require a PR and passing checks) and record the merge method in `AGENTS.md`. From then on, every change gets a branch. See [Git Workflow](./git-workflow.md).
 7. **Pick and connect the database.** (Supabase here; this is the swappable slot.) Then translate the model into a **versioned migration** (`supabase/migrations/<timestamp>_name.sql`), apply it, and **generate types** into `types/supabase.ts` (import as `@/types/supabase`).
    - Apply via SQL Editor → Run for a hosted project (no CLI/Docker needed). Verify in Table Editor (empty RLS-protected tables = correct).
    - `.env.local` holds literal values (never committed): URL as bare origin (no trailing slash / no `/rest/v1`), publishable key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`, secret key → `SUPABASE_SERVICE_ROLE_KEY`. Restart the dev server after editing env.
    - Env handling (the `NEXT_PUBLIC_` boundary, `.env.example` vs `.env.local`, and getting keys onto the host so deploys aren't blank) is its own topic. See [Env & Deployment](./env-and-deployment.md).
    - Every later schema change is a **new** migration (never edit an applied one), followed by regenerated types, committed together. Lock down what the public can read at the database level (grants, RLS, views). See [Data-Layer Security](./data-layer-security.md).
+   - Keep the login (auth users) and the profile (your table) separate, linked by one foreign key. Have the database create the profile on signup (a trigger), so the app never needs insert permission on profiles.
 
 ## Phase 4 — Prove it works (de-risk before feature sprawl)
 
